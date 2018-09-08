@@ -213,11 +213,6 @@ namespace Swashbuckle.AspNetCore.Swagger
 
     public class NonBodyParameter : PartialSchema, IParameter
     {
-        public NonBodyParameter()
-        {
-            Extensions = new Dictionary<string, object>();
-        }
-
         public string Name { get; set; }
 
         public string In { get; set; }
@@ -225,9 +220,6 @@ namespace Swashbuckle.AspNetCore.Swagger
         public string Description { get; set; }
 
         public bool Required { get; set; }
-
-        [JsonExtensionData]
-        public Dictionary<string, object> Extensions { get; private set; }
     }
 
     public class Schema
@@ -250,11 +242,11 @@ namespace Swashbuckle.AspNetCore.Swagger
 
         public int? MultipleOf { get; set; }
 
-        public int? Maximum { get; set; }
+        public double? Maximum { get; set; }
 
         public bool? ExclusiveMaximum { get; set; }
 
-        public int? Minimum { get; set; }
+        public double? Minimum { get; set; }
 
         public bool? ExclusiveMinimum { get; set; }
 
@@ -304,6 +296,11 @@ namespace Swashbuckle.AspNetCore.Swagger
 
     public class PartialSchema
     {
+        public PartialSchema()
+        {
+            Extensions = new Dictionary<string, object>();
+        }
+
         public string Type { get; set; }
 
         public string Format { get; set; }
@@ -314,11 +311,11 @@ namespace Swashbuckle.AspNetCore.Swagger
 
         public object Default { get; set; }
 
-        public int? Maximum { get; set; }
+        public double? Maximum { get; set; }
 
         public bool? ExclusiveMaximum { get; set; }
 
-        public int? Minimum { get; set; }
+        public double? Minimum { get; set; }
 
         public bool? ExclusiveMinimum { get; set; }
 
@@ -337,6 +334,9 @@ namespace Swashbuckle.AspNetCore.Swagger
         public IList<object> Enum { get; set; }
 
         public int? MultipleOf { get; set; }
+
+        [JsonExtensionData]
+        public Dictionary<string, object> Extensions { get; private set; }
     }
 
     public class Response

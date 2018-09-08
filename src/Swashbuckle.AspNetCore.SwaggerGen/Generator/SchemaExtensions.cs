@@ -26,11 +26,11 @@ namespace Swashbuckle.AspNetCore.SwaggerGen
 
                 if (attribute is RangeAttribute range)
                 {
-                    if (Int32.TryParse(range.Maximum.ToString(), out int max))
-                        schema.Maximum = max;
+                    if (Double.TryParse(range.Maximum.ToString(), out double maximum))
+                        schema.Maximum = maximum;
 
-                    if (Int32.TryParse(range.Minimum.ToString(), out int min))
-                        schema.Minimum = min;
+                    if (Double.TryParse(range.Minimum.ToString(), out double minimum))
+                        schema.Minimum = minimum;
                 }
 
                 if (attribute is MinLengthAttribute minLength)
@@ -67,6 +67,7 @@ namespace Swashbuckle.AspNetCore.SwaggerGen
                 // TODO: Handle jagged primitive array and error on jagged object array
                 partialSchema.Items = new PartialSchema();
                 partialSchema.Items.PopulateFrom(schema.Items);
+                partialSchema.CollectionFormat = "multi";
             }
 
             partialSchema.Default = schema.Default;

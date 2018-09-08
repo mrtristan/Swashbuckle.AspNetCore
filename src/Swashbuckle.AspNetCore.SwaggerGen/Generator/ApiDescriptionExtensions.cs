@@ -37,42 +37,9 @@ namespace Swashbuckle.AspNetCore.SwaggerGen
             return (methodInfo != null);
         }
 
-        internal static string FriendlyId(this ApiDescription apiDescription)
-        {
-            var parts = (apiDescription.RelativePathSansQueryString() + "/" + apiDescription.HttpMethod.ToLower())
-                .Split('/');
-
-            var builder = new StringBuilder();
-            foreach (var part in parts) 
-            {
-                var trimmed = part.Trim('{', '}');
-                builder.AppendFormat("{0}{1}",
-                    (part.StartsWith("{") ? "By" : string.Empty),
-                    trimmed.ToTitleCase()
-                );
-            }
-
-            return builder.ToString();
-        }
-
         internal static string RelativePathSansQueryString(this ApiDescription apiDescription)
         {
             return apiDescription.RelativePath.Split('?').First();
-        }
-
-        internal static IEnumerable<string> SupportedRequestMediaTypes(this ApiDescription apiDescription)
-        {
-            return apiDescription.SupportedRequestFormats
-                .Select(requestFormat => requestFormat.MediaType)
-                .Distinct();
-        }
-
-        internal static IEnumerable<string> SupportedResponseMediaTypes(this ApiDescription apiDescription)
-        {
-            return apiDescription.SupportedResponseTypes
-                .SelectMany(responseType => responseType.ApiResponseFormats)
-                .Select(responseFormat => responseFormat.MediaType)
-                .Distinct();
         }
 
         internal static bool IsObsolete(this ApiDescription apiDescription)

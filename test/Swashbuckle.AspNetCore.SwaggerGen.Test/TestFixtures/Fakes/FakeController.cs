@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Swashbuckle.AspNetCore.SwaggerGen.Test
 {
@@ -46,11 +47,11 @@ namespace Swashbuckle.AspNetCore.SwaggerGen.Test
         public void AcceptsComplexType(ComplexType param)
         { }
 
-        public void AcceptsModelBoundParams(string stringWithNoAttributes)
+        public void AcceptsBindingAnnotatedParams(string stringWithNoAttributes)
         { }
 
         // Use this version when https://github.com/aspnet/Mvc/issues/7435 is resolved
-        //public void AcceptsModelBoundParams(
+        //public void AcceptsBindingAnnotatedParams(
         //    string stringWithNoAttributes,
         //    [BindRequired]string stringWithBindRequired)
         //    [BindRequired]int intWithBindRequired)
@@ -63,7 +64,7 @@ namespace Swashbuckle.AspNetCore.SwaggerGen.Test
             [Required]int intWithRequired)
         { }
 
-        public void AcceptsModelBoundType(ModelBoundType param)
+        public void AcceptsBindingAnnotatedType(BindingAnnotatedType param)
         { }
 
         public void AcceptsDataAnnotatedType(DataAnnotatedType param)
@@ -91,6 +92,9 @@ namespace Swashbuckle.AspNetCore.SwaggerGen.Test
         { }
 
         public void AcceptsComplexTypeFromBody([FromBody]ComplexType param)
+        { }
+
+        public void AcceptsIFormFile(IFormFile formFile)
         { }
 
         public void AcceptsCancellationToken(CancellationToken cancellationToken)
@@ -121,6 +125,24 @@ namespace Swashbuckle.AspNetCore.SwaggerGen.Test
         public IActionResult AnnotatedWithResponseTypeAttributes()
         {
             throw new NotImplementedException();
+        }
+
+        [Consumes("application/xml")]
+        public IActionResult AnnotatedWithConsumes([FromBody]ComplexType param1)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Produces("application/xml")]
+        public IActionResult AnnotatedWithProduces()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet(Name = "GetResource")]
+        public IActionResult AnnotatedWithRouteName()
+        {
+           throw new NotImplementedException();
         }
 
         [Obsolete]
