@@ -67,15 +67,23 @@ namespace Swashbuckle.AspNetCore.SwaggerGen
                     // Type is self-referencing
                     jsonContract.IsSelfReferencingArrayOrDictionary() ||
                     // Type is enum and opt-in flag set
-                    (type.GetTypeInfo().IsEnum && _options.UseReferencedDefinitionsForEnums));
+                    (_options.UseReferencedDefinitionsForEnums && IsEnum(type)));
 
             return createReference
                 ? CreateReferenceSchema(type, referencedTypes)
                 : CreateInlineSchema(type, referencedTypes);
         }
 
+        private bool IsEnum(Type type)
+        {
+            return type.GetTypeInfo().IsEnum ||
+                Nullable.GetUnderlyingType(type)?.GetTypeInfo().IsEnum == true;
+        }
+
         private Schema CreateReferenceSchema(Type type, Queue<Type> referencedTypes)
         {
+            // If Nullable<T>, use the type argument
+            type = Nullable.GetUnderlyingType(type) ?? type;
             referencedTypes.Enqueue(type);
             return new Schema { Ref = "#/definitions/" + _schemaIdManager.IdFor(type) };
         }
