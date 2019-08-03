@@ -1,6 +1,6 @@
-| :mega: Upgrading to version 3.x? |
+| :mega: Important for anyone upgrading major versions! |
 |--------------|
-|If you're upgrading from 2.x to 3.x, there's a couple of breaking changes to be aware of. See the [release notes](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/releases/tag/v3.0.0) for details|
+|* If you're upgrading from 2.x to 3.x, there's a couple of breaking changes to be aware of. See the [release notes](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/releases/tag/v3.0.0) for details<br />* If you're upgrading from 3.x to 4.x, there's more breaking changes to be aware of. See those [release notes here](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/releases/tag/v4.0.0)|
 
 Swashbuckle.AspNetCore
 =========
@@ -17,12 +17,13 @@ Once you have an API that can describe itself in Swagger, you've opened the trea
 
 # Compatibility #
 
-|Swashbuckle Version|ASP.NET Core|Swagger (OpenAPI) Spec.|swagger-ui|
-|----------|----------|----------|----------|
-|[master](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/master)|>=2.0.0|2.0|3.18.0|
-|[3.0.0](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/v3.0.0)|>=1.0.4|2.0|3.17.1|
-|[2.5.0](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/v2.5.0)|>=1.0.4|2.0|3.16.0|
-|[1.2.0](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/v1.2.0)|>=1.0.4|2.0|2.2.10|
+|Swashbuckle Version|ASP.NET Core|Swagger (OpenAPI) Spec.|swagger-ui|ReDoc UI|
+|----------|----------|----------|----------|----------|
+|[master](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/master)|>=2.0.0|2.0|3.19.5|1.22.2|
+|[4.0.0](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/v4.0.0)|>=2.0.0|2.0|3.19.5|1.22.2|
+|[3.0.0](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/v3.0.0)|>=1.0.4|2.0|3.17.1|1.20.0|
+|[2.5.0](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/v2.5.0)|>=1.0.4|2.0|3.16.0|1.20.0|
+|[1.2.0](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/v1.2.0)|>=1.0.4|2.0|2.2.10|1.20.0|
 
 # Getting Started #
 
@@ -36,6 +37,8 @@ Once you have an API that can describe itself in Swagger, you've opened the trea
 2. In the _ConfigureServices_ method of _Startup.cs_, register the Swagger generator, defining one or more Swagger documents.
 
     ```csharp
+    using Swashbuckle.AspNetCore.Swagger;
+    
     services.AddMvc();
 
     services.AddSwaggerGen(c =>
@@ -246,14 +249,14 @@ In Swagger, Operations can be a assigned a unique `operationId`. This is often u
 __Option 1) Action Names__
 
 ```csharp
-[[HttpGet("{id}")]]
+[HttpGet("{id}")]
 public IActionResult GetProductById(int id) // operationId = "GetProductById"
 ```
 
 __Option 2) Route Names__
 
 ```csharp
-[[HttpGet("{id}", Name = "GetProductById")]]
+[HttpGet("{id}", Name = "GetProductById")]
 public IActionResult Get(int id) // operationId = "GetProductById"
 ```
 
